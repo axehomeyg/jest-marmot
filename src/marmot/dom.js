@@ -59,7 +59,6 @@ export const type = content => element => userEvent.type(element, content)
 // todo: make this plugin into client router
 export const visit = url => window.location.assign(url)
 
-
 // Clean dom
 export const cleanup = RTLCleanup
 
