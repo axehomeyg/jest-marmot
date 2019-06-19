@@ -5,7 +5,8 @@ export * from "./marmot/steps"
 
 // Marmot config
 const callbacks = {
-  begin: []
+  begin: [],
+  cleanup: []
 }
 
 let appRoot
@@ -22,11 +23,14 @@ const router = obj => (
     (appRouter = obj) :
     appRouter())
 
-const cleanup = () => DOMCleanup()
-
 const on = name => callback => callbacks[name].push(callback)
 
 const run = (name, options) => callbacks[name].forEach(callback => callback(options))
+
+const cleanup = () => {
+  run('cleanup')
+  DOMCleanup()
+}
 
 export const tap = returnable => callback => {
   callback(returnable)

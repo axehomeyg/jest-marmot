@@ -43,7 +43,8 @@ const common = ({
  * Configure Marmot
  */
 // other examples:
-//  Marmot.onBegin(opts => opts.data && Mocks.mockBackend(opts.data))
+// Marmot.on('begin')(opts => opts.data && Mocks.mockBackend(opts.data))
+// Marmot.on('cleanup')(() => Mocks.reset())
 Marmot.root(() => <App />)
 Marmot.router(history)
 Marmot.renderer((child, opts) => withRouter(child, opts.route))
