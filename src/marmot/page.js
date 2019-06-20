@@ -1,13 +1,13 @@
 import {click, enter, find, type, visit} from "./dom"
 import {promise} from "../utility"
 
-// this 'state' object holds onto the testing-library dom/container/functions for interacting with jsdom
+// this 'page' object holds onto the testing-library dom/container/functions for interacting with jsdom
 const normalizeFillInFinder = finder => (
   (typeof finder == "string") ?
     {labelText: finder} :
     finder)
 
-const state = domFunctions => ({
+const page = domFunctions => ({
     // Click on an element
     click: (finder) => find(finder, domFunctions).then(click),
 
@@ -44,6 +44,6 @@ const state = domFunctions => ({
   })
 
 // a little heavy to get keys
-export const actions = Object.keys(state({}))
+export const actions = Object.keys(page({}))
 
-export default state 
+export default page 

@@ -1,9 +1,7 @@
 import {renderer, cleanup as DOMCleanup } from "./marmot/dom"
 import {dig, callOrCreate} from "./utility"
 
-export * from "./marmot/dom"
 export * from "./marmot/scenario"
-export * from "./marmot/steps"
 
 const marmotGlobals = {
   callbacks: {

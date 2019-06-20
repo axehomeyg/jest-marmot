@@ -9,7 +9,7 @@ const terminators = collector => ({
   run:  () => it(collector.name, () => K(collector)(Marmot.run('begin'))),
 
   // Run all of those steps
-  toPromise: () => List.run(collector.list)(collector.state())
+  toPromise: () => List.run(collector.list)(collector.page())
 })
 
 export default terminators
