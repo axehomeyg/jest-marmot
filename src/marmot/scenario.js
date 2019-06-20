@@ -5,6 +5,6 @@ import Marmot from "../index"
 
 // Run a chained operation scenario
 export const scenario = (name, options = {}) => stepsCollector({
-  state: root => state(render(Marmot.root(), options)),
+  state: () => state(render(Marmot.root(), options)),
   name,
   options})

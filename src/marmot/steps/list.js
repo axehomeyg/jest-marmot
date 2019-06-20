@@ -1,15 +1,18 @@
-import Marmot from "../index"
-import {actions} from "./state"
-import {tap} from "../utility"
+import Marmot from "../../index"
+import {actions} from "../state"
+import {tap, yieldSelf} from "../../utility"
 
 // generates hash of functions like...
 // e.g. visit = (...args) => state => state.visit(...args)
-const featureSteps = actions.reduce(
-  (steps, name) => ({
-    ...steps,
-    [name] : (...args) => state => state[name](...args)
-  }), {})
+//
+const featureStep = name => ({ [name] : (...args) => state => state[name](...args) })
 
+const featureSteps = actions
+  .reduce(
+    (steps, name) => ({ ...steps, ...featureStep(name) }),
+    {})
+
+console.log("Fs", featureSteps)
 // a hash that supports a chaining DSL
 // e.g. stepCollector(initialState).visit("/").click("button").fillIn("k","v")
 
@@ -18,8 +21,7 @@ const captureStep = (collector, stepName) => (...args) => (
   tap(collector)(() => collector.stepList.push(featureSteps[stepName](...args))))
 
 // all step handlers
-const stepHandlers  = (collector) => Object 
-  .keys(featureSteps)
+const stepHandlers  = (collector) => actions
   .reduce((proxy, stepName) => (
     { ...proxy,
       [stepName] : captureStep(collector, stepName)}),
@@ -30,28 +32,20 @@ const stepHandlers  = (collector) => Object
 
 // step terminators (returns a jest-friendly promise) 
 const stepTerminators = (collector) => ({
-
-  // Acutally execute the test (don't render anything before this point)
-  run: () => it(collector.name, () => {
-    Marmot.run('begin', collector.options) 
-    return collector
-  }),
-  
-  // Called by jest's automatic promise return handling
   then: res => collector.toPromise().then(res),
 
+  run:  () => it(collector.name, () => tap(collector)(() => Marmot.run('begin'))),
+
   // Run all of those steps
-  toPromise: () => {
-    const state = collector.state()
-
-    return collector.stepList.reduce((chain, func) => {
-      return chain.then(result => func(state))
-    }, Promise.resolve([]))
-  }
-
+  toPromise: () => yieldSelf(collector.state())(state => (
+    collector.stepList.reduce((chain, func) => (
+      chain.then(result => func(state))
+    ), Promise.resolve([]))
+  ))
 })
 
 // Build the chainable/promisable object
+// expects 'state', and 'run'
 export const stepsCollector = initial => tap(initial)(collector => Object.assign(
   collector,
   stepHandlers(collector),
