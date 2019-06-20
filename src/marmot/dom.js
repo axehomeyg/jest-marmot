@@ -1,6 +1,5 @@
 import { render as RTLRender, waitForElement, fireEvent, cleanup as RTLCleanup } from '@testing-library/react'
 import Marmot from "../index"
-import {tap} from "../utility"
 import userEvent from "@testing-library/user-event"
 
 // What kind of dom query are we performing?
