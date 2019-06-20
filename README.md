@@ -12,7 +12,7 @@ npm i --save-dev jest-marmot
 ```
 
 ## Usage
-For a full redux/react-router example, see [Tests](https://github.com/axehomeyg/jest-marmot/blob/master/__test__/session.test.js)
+For a full redux/react-router example, see the redux [test](https://github.com/axehomeyg/jest-marmot/blob/master/__test__/session.test.js).
 
 ```javascript
 import Marmot, {scenario} from 'jest-marmot'
@@ -32,9 +32,11 @@ describe("My Feature", () => {
 ## Advanced Setup
 
 ### Redux/ReactRouter w/ global setup
-Example setup for a Redux/ReactRouter project
+
 You'll want to configure Marmot global settings in your jest setup file.
+
 e.g. in setupTests.js - configured from your package.json
+
 ```javascript
 import React from 'react'
 import Marmot from "jest-marmot"
@@ -81,7 +83,7 @@ scenario("My test which assumes App is our entry point")
 ```
 
 ### Reusable steps/flows
-An argument could be made that re-usable flows is a sign of redundant testing and a need for a more balanced test pyramid. Alas, you may not have a choice on a large test suite! Reusable steps to the rescue.
+An argument could be made that reusable flows are a sign of redundant testing with a need for a more balanced test pyramid. Alas, you may not have a choice in a large existing test suite! Marmot's step array support is just what the doctor ordered!
 
 In your tests, you could do something like this.
 ```javascript
@@ -122,6 +124,6 @@ export default common = ({
 
 [npm-image]: https://img.shields.io/npm/v/jest-marmot.svg
 [npm-url]: https://npmjs.org/package/jest-marmot
-[travis-image]: https://img.shields.io/travis/live-js/jest-marmot/master.svg
-[travis-url]: https://travis-ci.org/live-js/jest-marmot
+[travis-image]: https://img.shields.io/travis/axehomeyg/jest-marmot/master.svg
+[travis-url]: https://travis-ci.org/axehomeyg/jest-marmot
 
