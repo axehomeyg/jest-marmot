@@ -1,17 +1,15 @@
 import {actions} from "../page"
-import {K, tap} from "../../utility"
+import {K} from "../../utility"
 import * as List from "./list"
 import terminators from "./terminators"
 
-// Return a function that can run our step, once we're given a dom page to run against
+// Return a function that takes name, args, and page ('visit', '/', page)
 const step = name => (...args) => page => page[name](...args)
 
 // append step to list
 const capture = (collector, name) => (...args) => (
   K(collector)(
-    List.capture(collector.list)(
-      step(name))(
-        ...args)))
+    List.capture(collector.list)(step(name))(...args)))
 
 const steps = (collector) => actions
   // all step handlers. e.g. {visit: ({url}) => page => page.visit(url)} 

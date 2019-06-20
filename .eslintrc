@@ -21,8 +21,7 @@
 
   "plugins": [
      "react",
-     "jest",
-     "react-hooks"
+     "jest"
   ],
 
   "rules": {
@@ -157,8 +156,6 @@
     "quote-props": 0,
     // "quotes": [2, "single", "avoid-escape"],
     "radix": 2,
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
     // "semi": [2, "always"],
     "semi-spacing": 0,
     "sort-vars": 0,
