@@ -1,6 +1,6 @@
 {
   "name": "jest-marmot",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Jest Test Framework DSL",
   "main": "lib/jest-marmot.min.js",
   "files": [
