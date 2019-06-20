@@ -1,41 +1,39 @@
 import {renderer, cleanup as DOMCleanup } from "./marmot/dom"
+import {dig, callOrCreate} from "./utility"
+
 export * from "./marmot/dom"
 export * from "./marmot/scenario"
 export * from "./marmot/steps"
 
-// Marmot config
-const callbacks = {
-  begin: [],
-  cleanup: []
+const marmotGlobals = {
+  callbacks: {
+    begin: [],
+    cleanup: []
+  }
 }
 
-let appRoot
+/* *********************************************
+ * Config (app to render, router for navigation)
+ * ********************************************/
+export const root = callOrCreate(marmotGlobals)('root')
 
-const root = comp => (
-  comp ?
-    (appRoot = comp) :
-    appRoot()) // eslint-disable-line
+export const router = callOrCreate(marmotGlobals)('router')
 
-let appRouter
+/* **************
+ * Callbacks
+ * *************/
+const callbacks = name => dig(['callbacks', name], marmotGlobals)
 
-const router = obj => (
-  obj ?
-    (appRouter = obj) :
-    appRouter())
+const execCallback = options => callback => callback(options)
 
-const on = name => callback => callbacks[name].push(callback)
+// Register a callback on an eventname (begin|cleanup)
+export const on = name => callback => callbacks(name).push(callback)
 
-const run = (name, options) => callbacks[name].forEach(callback => callback(options))
+// Run callbacks for a given eventname
+export const run = (name, options) => callbacks(name).forEach(execCallback(options))
 
-const cleanup = () => {
-  run('cleanup')
-  DOMCleanup()
-}
-
-export const tap = returnable => callback => {
-  callback(returnable)
-  return returnable
-}
+// Call this in afterEach for all scenarios
+export const cleanup = () => [run('cleanup'), DOMCleanup()]
 
 const Marmot = {
   cleanup,

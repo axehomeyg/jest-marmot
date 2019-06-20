@@ -1,5 +1,5 @@
 import {click, enter, find, type, visit} from "./dom"
-import {tap} from "../index"
+import {tap} from "../utility"
 
 const promise = callback => (new Promise(resolve => callback(resolve)))
 

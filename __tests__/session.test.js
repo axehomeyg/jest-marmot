@@ -46,7 +46,7 @@ const common = ({
 // Marmot.on('begin')(opts => opts.data && Mocks.mockBackend(opts.data))
 // Marmot.on('cleanup')(() => Mocks.reset())
 Marmot.root(() => <App />)
-Marmot.router(history)
+Marmot.router(() => history)
 Marmot.renderer((child, opts) => withRouter(child, opts.route))
 Marmot.renderer(child => withProvider(createMockStore({}))(child))
 
@@ -67,8 +67,9 @@ describe("Account", () => {
     .see("Welcome, " + names[0])
     .run()
 
-  // A second similar test to smoke out test-isolation issues (jsdom not clearing out)
-  scenario("Sign In - w/ testId", {route: "/session"})
+  // A second similar test to smoke out test-isolation issues (jsdom not clearing out), also, navigation after init
+  scenario("Sign In - w/ testId")
+    .visit("/session")
     .fillIn("Name", "Bilbo Baggins")
     .click({testId:"submit"})
     .see("Welcome, " + names[1])

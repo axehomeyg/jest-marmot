@@ -1,5 +1,6 @@
-import Marmot, {tap} from "../index"
+import Marmot from "../index"
 import {actions} from "./state"
+import {tap} from "../utility"
 
 // generates hash of functions like...
 // e.g. visit = (...args) => state => state.visit(...args)

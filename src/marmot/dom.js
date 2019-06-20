@@ -1,5 +1,6 @@
 import { render as RTLRender, waitForElement, fireEvent, cleanup as RTLCleanup } from '@testing-library/react'
-
+import Marmot from "../index"
+import {tap} from "../utility"
 import userEvent from "@testing-library/user-event"
 
 // What kind of dom query are we performing?
@@ -57,7 +58,7 @@ export const type = content => element => userEvent.type(element, content)
 
 // Visit
 // todo: make this plugin into client router
-export const visit = url => window.location.assign(url)
+export const visit = url => (Marmot.router().replace || window.location.assign)(url)
 
 // Clean dom
 export const cleanup = RTLCleanup
