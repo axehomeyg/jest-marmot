@@ -1,6 +1,8 @@
 import Marmot from "../../index"
 import {actions} from "../state"
-import {tap, yieldSelf} from "../../utility"
+import {K, tap, ytieldSelf} from "../../utility"
+import * as List from "./list"
+
 
 // generates hash of functions like...
 // e.g. visit = (...args) => state => state.visit(...args)
@@ -14,10 +16,8 @@ const featureSteps = actions
 
 // a hash that supports a chaining DSL
 // e.g. stepCollector(initialState).visit("/").click("button").fillIn("k","v")
-
 // individual step handler 
-const captureStep = (collector, stepName) => (...args) => (
-  tap(collector)(() => collector.stepList.push(featureSteps[stepName](...args))))
+const captureStep = (collector, stepName) => (...args) => K(collector)(List.capture(collector.stepList)(featureSteps[stepName])(...args))
 
 // all step handlers
 const stepHandlers  = (collector) => actions
@@ -36,11 +36,7 @@ const stepTerminators = (collector) => ({
   run:  () => it(collector.name, () => tap(collector)(() => Marmot.run('begin'))),
 
   // Run all of those steps
-  toPromise: () => yieldSelf(collector.state())(state => (
-    collector.stepList.reduce((chain, func) => (
-      chain.then(result => func(state))
-    ), Promise.resolve([]))
-  ))
+  toPromise: () => List.run(collector.stepList)(collector.state())
 })
 
 // Build the chainable/promisable object

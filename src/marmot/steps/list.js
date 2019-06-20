@@ -5,20 +5,12 @@ import {tap, yieldSelf} from "../../utility"
 // generates hash of functions like...
 // e.g. visit = (...args) => state => state.visit(...args)
 //
-const featureStep = name => ({ [name] : (...args) => state => state[name](...args) })
-
-const featureSteps = actions
-  .reduce(
-    (steps, name) => ({ ...steps, ...featureStep(name) }),
-    {})
-
-console.log("Fs", featureSteps)
+// console.log("Fs", featureSteps)
 // a hash that supports a chaining DSL
 // e.g. stepCollector(initialState).visit("/").click("button").fillIn("k","v")
 
 // individual step handler 
-const captureStep = (collector, stepName) => (...args) => (
-  tap(collector)(() => collector.stepList.push(featureSteps[stepName](...args))))
+export const capture = list => func => (...args) => list.push(func(...args))
 
 // all step handlers
 const stepHandlers  = (collector) => actions
@@ -29,6 +21,16 @@ const stepHandlers  = (collector) => actions
       steps: list => list.reduce((collector, step) => captureStep(collector, step[0])(...step.slice(1)), collector),
       stepList: []
     })
+
+
+
+// Run all of the steps, as chained promises
+export const run = list => state => (
+  list
+    .reduce((chain, func) => (
+      chain.then(() => func(state))),
+      Promise.resolve([])))
+
 
 // step terminators (returns a jest-friendly promise) 
 const stepTerminators = (collector) => ({
