@@ -1,5 +1,5 @@
 import * as Dom from "../../src/marmot/dom"
-import Page from "../../src/marmot/page"
+import Page, {actions} from "../../src/marmot/page"
 
 it("pins a finder specifically to labelText for a textfield", () => {
 
@@ -14,4 +14,26 @@ it("pins a finder specifically to labelText for a textfield", () => {
 
   expect(mockFindFunc).toHaveBeenCalledWith({labelText: "key"}, mockPage)
   expect(mockResultFunc).toHaveBeenCalledWith("value")
+})
+
+it("Lists all actions in page object, for external use", () => {
+  expect(actions).toEqual([
+    'click',
+    'debug',
+    'enter',
+    'exec',
+    'fillIn',
+    'notSee',
+    'see',
+    'sleep',
+    'visit'
+  ])
+})
+
+it("Supports auxiliary debug functions", () => {
+  const mockDebug  = {}
+  Page({}).debug
+  Page({}).enter
+  Page({}).exec
+  Page({}).sleep
 })
