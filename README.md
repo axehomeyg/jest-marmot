@@ -4,7 +4,6 @@
 
 [![NPM Version][npm-image]][npm-url]
 [![Linux Build][travis-image]][travis-url]
-[![Coverage Status](https://coveralls.io/repos/github/axehomeyg/jest-marmot/badge.svg?branch=master)](https://coveralls.io/github/axehomeyg/jest-marmot?branch=master)
 
 ## Install 
 ```bash
