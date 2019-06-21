@@ -1,10 +1,10 @@
 // Useful combinators
 export const K = x => y => x
 
-// General utilities for use through
+// General utilities
 export const tap = returnable => callback => K(returnable)(callback(returnable))
 
-export const dig = (path, tree) => path.reduce((ac, node) => ((ac && ac[node]) ? ac[node] : null), tree) // eslint-disable-line
+export const dig = (path, tree) => path.reduce((ac, node) => ((ac && ac[node]) ? ac[node] : null), tree)
 
 export const yieldSelf = obj => func => func(obj)
 

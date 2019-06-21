@@ -14,7 +14,8 @@
     "describe": true,
     "before": true,
     "it": true,
-    "expect": true
+    "expect": true,
+    "jest": true
   },
 
   "parser": "babel-eslint",

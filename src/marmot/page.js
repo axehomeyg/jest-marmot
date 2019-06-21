@@ -7,7 +7,7 @@ const normalizeFillInFinder = finder => (
     {labelText: finder} :
     finder)
 
-const page = domFunctions => ({
+export const page = domFunctions => ({
     // Click on an element
     click: (finder) => find(finder, domFunctions).then(click),
 

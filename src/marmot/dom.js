@@ -3,7 +3,7 @@ import Marmot from "../index"
 import userEvent from "@testing-library/user-event"
 
 // What kind of dom query are we performing?
-const queryPlan = finder => {
+export const queryPlan = finder => {
   if(typeof finder == "string") {
     return "inlineText"
   }
@@ -25,10 +25,10 @@ const queryPlan = finder => {
 }
 
 // Do we need a specialized find? (get, getAll, queryAll)
-const queryType = options => ((options && options.queryType) || "get")
+export const queryType = options => ((options && options.queryType) || "get")
 
 // Map Search parameters into react-testing-library function calls
-const queryParameters = finder => ({
+export const queryParameters = finder => ({
   "inlineText":   () => ["ByText", finder],
   "placeholder":  () => ["ByPlaceHolderText", finder.placeholder],
   "testId":       () => ["ByTestId", finder.testId],
@@ -42,7 +42,7 @@ const finderFunction = domFunctions => (queryParams, prefix) => domFunctions[pre
 export const find = (finder, domFunctions, options) => (
   waitForElement(() => finderFunction(domFunctions)(queryParameters(finder,  options || {}), queryType(options)))
     .catch(err => {
-      console.log("WaitForElement threw error", finder, err, document.body.innerHTML, "container", domFunctions.container.innerHTML) // eslint-disable-line
+      console.log("WaitForElement threw error", err, "For Finder", finder, "With Body", domFunctions.container.innerHTML) // eslint-disable-line
       throw err
     }))
 
