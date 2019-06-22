@@ -1,6 +1,7 @@
 # jest-marmot
-> Jest React/Redux Test Framework DSL
-## Heavily inspired by the RoR testing frameworks
+> JS Integration Test DSL
+
+### Heavily inspired by the RoR testing frameworks
 
 [![NPM Version][npm-image]][npm-url]
 [![Linux Build][travis-image]][travis-url]
@@ -11,7 +12,7 @@ npm i --save-dev jest-marmot
 ```
 
 ## Usage
-For a full redux/react-router example, see the redux [test](https://github.com/axehomeyg/jest-marmot/blob/master/__test__/session.test.js).
+For a full redux/react-router example, see the redux [test app](https://github.com/axehomeyg/jest-marmot-test-app).
 
 ```javascript
 import Marmot, {scenario} from 'jest-marmot'

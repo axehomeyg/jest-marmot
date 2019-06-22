@@ -2,8 +2,9 @@
   "name": "jest-marmot",
   "version": "1.0.3",
   "description": "Jest Test Framework DSL",
-  "main": "lib/jest-marmot.min.js",
+  "main": "lib/jest-marmot.js",
   "files": [
+    "lib/jest-marmot.js",
     "lib/jest-marmot.min.js"
   ],
   "repository": "git@github.com:axehomeyg/jest-marmot.git",
@@ -24,17 +25,11 @@
     "eslint-loader": "^2.1.2",
     "eslint-plugin-jest": "^22.7.0",
     "eslint-plugin-react": "^7.13.0",
-    "eslint-plugin-react-hooks": "^1.6.0",
     "jest": "^24.1.0",
-    "jest-dom": "^3.5.0",
     "jsdom": "^15.1.1",
     "jsdom-global": "^3.0.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-redux": "^7.1.0",
-    "react-router-dom": "^5.0.0",
-    "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
     "yargs": "^13.2.1"
@@ -53,10 +48,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 96,
-        "functions": 93,
-        "lines": 97,
-        "statements":95 
+        "branches": 92,
+        "functions": 81,
+        "lines": 92,
+        "statements": 87 
       }
     },
     "testPathIgnorePatterns": [
