@@ -6,7 +6,7 @@ import * as List from "./list"
 const terminators = collector => ({
   then: res => collector.toPromise().then(res),
 
-  run:  () => it(collector.name, () => K(collector)(Marmot.run('begin'))),
+  run:  () => it(collector.name, () => K(collector)(Marmot.run('begin', collector.options))),
 
   // Run all of those steps
   toPromise: () => List.run(collector.list)(collector.page())
