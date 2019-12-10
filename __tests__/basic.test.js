@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Marmot, {scenario} from '../src/index'
 
 const Page = () => {
-  const resultsRef = React.createRef()
+  const [views, setViews] = useState(0)
+
   const clickHandler = event => {
     event.preventDefault()
-    resultsRef.current.innerHTML = "Thanks for clicking!"
+    setViews(views + 1)
   }
 
   return <div>
     <a href="/" data-testid="clickable" onClick={clickHandler}>Click Me!</a>
-    <div ref={resultsRef}></div>
+    <div>{views > 0 ? `View Count: ${views}` : ""}</div>
   </div>
 }
 
@@ -19,12 +20,11 @@ Marmot.root(() => <Page />)
 // Run the scenario with cleanup
 describe("Click Happy", () => {
 
-  const gratitude = "Thanks for clicking!"
+  const shown = "View Count: 1"
 
   scenario("Does it work?")
-    .notSee(gratitude)
+    .notSee(shown)
     .click({testId: "clickable"})
-    .see(gratitude)
+    .see(shown)
     .run()
-
 })
