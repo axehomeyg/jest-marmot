@@ -1,4 +1,4 @@
-import { render as RTLRender, waitForElement, fireEvent, cleanup as RTLCleanup } from '@testing-library/react'
+import { act, render as RTLRender, waitForElement, fireEvent, cleanup as RTLCleanup } from '@testing-library/react'
 import Marmot from "../index"
 import userEvent from "@testing-library/user-event"
 
@@ -47,13 +47,19 @@ export const find = (finder, domFunctions, options) => (
     }))
 
 // Click support
-export const click = (element) => userEvent.click(element)
+export const click = element => {
+  act(() => userEvent.click(element))
+}
 
 // Enter support
-export const enter = element => fireEvent.keyDown(element, {  key: 'Enter', keyCode: 13, which: 13})
+export const enter = element => {
+  act(() => fireEvent.keyDown(element, {  key: 'Enter', keyCode: 13, which: 13}))
+}
 
 // Type support
-export const type = content => element => userEvent.type(element, content)
+export const type = content => element => {
+  act(() => userEvent.type(element, content))
+}
 
 // Visit
 // todo: make this plugin into client router
