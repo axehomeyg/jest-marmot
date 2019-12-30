@@ -42,7 +42,7 @@ const finderFunction = domFunctions => (queryParams, prefix) => domFunctions[pre
 export const find = (finder, domFunctions, options) => (
   waitForElement(() => finderFunction(domFunctions)(queryParameters(finder,  options || {}), queryType(options)))
     .catch(err => {
-      console.log("WaitForElement threw error", err, "For Finder", finder, "With Body", domFunctions.container.innerHTML) // eslint-disable-line
+      console.log("WaitForElement threw error", err, "For Finder", finder, "With Body", domFunctions.container, domFunctions.container.innerHTML) // eslint-disable-line
       throw err
     }))
 
