@@ -3,9 +3,6 @@ name: Node.js Package
 on:
   # Trigger the workflow on push or pull request,
   # but only for the master branch
-  push:
-    branches:
-      - master
   release:
     types: [created]
 
@@ -34,6 +31,9 @@ jobs:
       - run: npm ci
       - run: npm build
       - run: npm version patch
+      - run: git push "https://ITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
