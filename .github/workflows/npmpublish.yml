@@ -30,9 +30,8 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
-      - run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
+      - run: git config --local user.email "action@github.com"
+      - run: git config --local user.name "GitHub Action"
       - run: npm ci
       - run: npm build
       - run: npm version patch
