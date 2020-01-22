@@ -1,4 +1,5 @@
 import { act, render as RTLRender, waitForElement, fireEvent, cleanup as RTLCleanup } from '@testing-library/react'
+import "regenerator-runtime/runtime"
 import Marmot from "../index"
 import userEvent from "@testing-library/user-event"
 
@@ -47,19 +48,33 @@ export const find = (finder, domFunctions, options) => (
     }))
 
 // Click support
+// export const click = async element => {
+//   console.log("async click")
+//   await act(() => userEvent.click(element))
+//   console.log("Done with async click")
+//   return 
+// }
+
 export const click = element => {
   act(() => userEvent.click(element))
+  return 
 }
-
 // Enter support
-export const enter = element => {
-  act(() => fireEvent.keyDown(element, {  key: 'Enter', keyCode: 13, which: 13}))
+export const enter = async element => {
+  return await act(() => fireEvent.keyDown(element, {  key: 'Enter', keyCode: 13, which: 13}))
 }
-
+// export const enter = element => {
+//   console.log("async enter")
+//   return act(() => fireEvent.keyDown(element, {  key: 'Enter', keyCode: 13, which: 13}))
+// }
+//
 // Type support
-export const type = content => element => {
-  act(() => userEvent.type(element, content))
+export const type = content => async element => {
+  return await act(() => userEvent.type(element, content))
 }
+// export const type = content => element => {
+//   return act(() => userEvent.type(element, content))
+// }
 
 // Visit
 // todo: make this plugin into client router
