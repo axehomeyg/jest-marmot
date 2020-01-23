@@ -48,7 +48,7 @@ export const find = (finder, domFunctions, options) => (
     }))
 
 // Click support
-export const click = element => act(() => userEvent.click(element))
+export const click = element => { act(() => userEvent.click(element)) ; return }
 
 // Enter support
 export const enter = async element => (await fireEvent.keyDown(element, {  key: 'Enter', keyCode: 13, which: 13}))
