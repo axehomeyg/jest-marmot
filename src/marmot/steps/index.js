@@ -28,4 +28,4 @@ export const stepsCollector = initial => Object.assign(
   initial,
   steps(initial),
   terminators(initial))
-  
+

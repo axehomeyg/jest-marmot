@@ -6,10 +6,10 @@ import * as List from "./list"
 const terminators = collector => ({
   then: res => collector.toPromise().then(res),
 
-  run:  () => it(collector.name, () => K(collector)(Marmot.run('begin', collector.options))),
+  run:  () => it(collector.name, async done => K(K(collector)(collector.done = done))(Marmot.run('begin', collector.options))),
 
   // Run all of those steps
-  toPromise: () => List.run(collector.list)(collector.page())
+  toPromise: () => List.run(collector.list, collector.done)(collector.page())
 })
 
 export default terminators
