@@ -1,6 +1,20 @@
 import React, { useState } from 'react'
-import Marmot, {scenario} from '../src/index'
+// Working in library, not externally
+// import Marmot, {scenario as scenarioa} from '../src/index'
 
+import * as Marmot from "../src/index"
+// Invalid Hook
+// import Marmot, {scenario} from '../lib/jest-marmot.js'
+
+// import * as JM from '../lib/jest-marmot.js'
+//
+// console.log("Root", Marmot.root, root)
+// console.log("Scenario", scenarioa, scenario)
+// console.log("JestMarmot", JestMarmot)
+
+// const Marmot = JestMarmot.Marmot
+// const scenario = JestMarmot.scenario
+//
 window.MessageChannel = require('worker_threads').MessageChannel
 
 const Page = () => {
@@ -18,13 +32,14 @@ const Page = () => {
 }
 
 Marmot.root(() => <Page />)
+// root(() => <Page />)
 
 // Run the scenario with cleanup
 describe("Click Happy", () => {
 
   const shown = "View Count: 1"
 
-  scenario("Does it work?")
+  Marmot.scenario("Does it work?")
     .notSee(shown)
     .click({testId: "clickable"})
     .see(shown)

@@ -1,7 +1,8 @@
-import {renderer, cleanup as DOMCleanup } from "./marmot/dom"
+import {renderer as DomRenderer, cleanup as DOMCleanup } from "./marmot/dom"
 import {dig, callOrCreate} from "./utility"
+import * as Scenario from "./marmot/scenario"
 
-export * from "./marmot/scenario"
+export const scenario = Scenario.scenario
 
 const marmotGlobals = {
   callbacks: {
@@ -32,6 +33,8 @@ export const run = (name, options) => callbacks(name).forEach(execCallback(optio
 
 // Call this in afterEach for all scenarios
 export const cleanup = () => [run('cleanup'), DOMCleanup()]
+
+export const renderer = DomRenderer
 
 const Marmot = {
   cleanup,
