@@ -33,7 +33,7 @@ jobs:
       - run: git config --local user.email "action@github.com"
       - run: git config --local user.name "GitHub Action"
       - run: npm ci
-      - run: npm build
+      - run: npm run build
       - run: npm version patch
       - run: git push "https://ITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
         env:
