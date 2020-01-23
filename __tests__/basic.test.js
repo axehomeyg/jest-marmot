@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Marmot, {scenario} from '../src/index'
 
+window.MessageChannel = require('worker_threads').MessageChannel
+
 const Page = () => {
   const [views, setViews] = useState(0)
 

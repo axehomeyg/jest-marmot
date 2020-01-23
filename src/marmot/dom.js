@@ -48,33 +48,13 @@ export const find = (finder, domFunctions, options) => (
     }))
 
 // Click support
-// export const click = async element => {
-//   console.log("async click")
-//   await act(() => userEvent.click(element))
-//   console.log("Done with async click")
-//   return 
-// }
+export const click = element => act(() => userEvent.click(element))
 
-export const click = element => {
-  act(() => userEvent.click(element))
-  return 
-}
 // Enter support
-export const enter = async element => {
-  return await act(() => fireEvent.keyDown(element, {  key: 'Enter', keyCode: 13, which: 13}))
-}
-// export const enter = element => {
-//   console.log("async enter")
-//   return act(() => fireEvent.keyDown(element, {  key: 'Enter', keyCode: 13, which: 13}))
-// }
-//
+export const enter = async element => (await fireEvent.keyDown(element, {  key: 'Enter', keyCode: 13, which: 13}))
+
 // Type support
-export const type = content => async element => {
-  return await act(() => userEvent.type(element, content))
-}
-// export const type = content => element => {
-//   return act(() => userEvent.type(element, content))
-// }
+export const type = content => async element => (await userEvent.type(element, content))
 
 // Visit
 // todo: make this plugin into client router
