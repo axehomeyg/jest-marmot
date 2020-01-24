@@ -6,12 +6,10 @@ export const run = (list, done) => state => (
   list
     .reduce((chain, func) => (
       chain.then(() => {
-        console.log("Running", func, state)
         return func(state)
       })),
       Promise.resolve([]))
     .finally(() => {
-      console.log("Done Running")
       done()
     })
 )
