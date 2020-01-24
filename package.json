@@ -33,6 +33,7 @@
   },
   "scripts": {
     "develop": "webpack --mode development --watch",
+    "pack": "webpack --mode development",
     "build": "webpack --mode production",
     "test": "jest test",
     "test:watch": "jest --watch"
