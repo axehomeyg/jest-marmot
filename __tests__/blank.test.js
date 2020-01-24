@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
-import {root} from '../dist/bundle.js'
-import { stubMessageChannel } from "../src/mock"
+import {stubMessageChannel} from '../dist/index.js'
 
 stubMessageChannel()
 

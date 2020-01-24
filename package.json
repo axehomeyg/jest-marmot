@@ -2,9 +2,9 @@
   "name": "jest-marmot",
   "version": "1.0.18",
   "description": "Jest Test Framework DSL",
-  "main": "dist/bundle.js",
+  "main": "dist/index.js",
   "files": [
-    "dist/bundle.js"
+    "dist"
   ],
   "repository": "git@github.com:axehomeyg/jest-marmot.git",
   "author": "Michael Cerna <cerna5150@yahoo.com>",
