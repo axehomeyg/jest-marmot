@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: 12
       - run: npm ci
-      - run: npm test --experimental-worker -- --forceExit
+      - run: npm test
 
   publish-npm:
     needs: build
@@ -34,7 +34,7 @@ jobs:
       - run: git config --local user.name "GitHub Action"
       - run: npm ci
       - run: npm run build
-      - run: git commit -am "Build for $GITHUB_SHA"
+      - run: git commit -am "Build for $GITHUB_SHA" || echo "no changes to bundle.js"
       - run: npm version patch
       - run: git push "https://GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
         env:
