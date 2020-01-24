@@ -9,7 +9,6 @@ stubMessageChannel()
 describe("Ensure loading main library works", () => {
 
   it("Works", done => {
-    console.log("working", done)
     return done()
   })
 })
