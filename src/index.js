@@ -1,6 +1,7 @@
 import { callOrCreate } from "./utility"
 import * as Scenario from "./marmot/scenario"
 import * as Callbacks from "./marmot/callbacks"
+import * as Mocks from "./mock"
 
 Callbacks.setGlobals()
 /* *********************************************
@@ -23,13 +24,16 @@ export const renderer = Scenario.renderer
 
 export const scenario = Scenario.scenario
 
+export const stubMessageChannel = Mocks.stubMessageChannel
+
 const Marmot = {
   cleanup,
   on,
   renderer,
   root,
   router,
-  run
+  run,
+  stubMessageChannel
 }
 
 export default Marmot
