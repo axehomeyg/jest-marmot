@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 
-import {root} from '../lib/jest-marmot.js'
+import {root} from '../dist/bundle.js'
+import { stubMessageChannel } from "../src/mock"
 
-window.MessageChannel = require('worker_threads').MessageChannel
+stubMessageChannel()
 
 // Run the scenario with cleanup
 describe("Ensure loading main library works", () => {
