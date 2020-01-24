@@ -1,40 +1,27 @@
-import {renderer as DomRenderer, cleanup as DOMCleanup } from "./marmot/dom"
-import {dig, callOrCreate} from "./utility"
+import { callOrCreate } from "./utility"
 import * as Scenario from "./marmot/scenario"
+import * as Callbacks from "./marmot/callbacks"
 
-export const scenario = Scenario.scenario
-
-const marmotGlobals = {
-  callbacks: {
-    begin: [],
-    cleanup: []
-  }
-}
-
+Callbacks.setGlobals()
 /* *********************************************
  * Config (app to render, router for navigation)
  * ********************************************/
-export const root = callOrCreate(marmotGlobals)('root')
+export const root = callOrCreate(global.marmotGlobals)('root')
 
-export const router = callOrCreate(marmotGlobals)('router')
-
-/* **************
- * Callbacks
- * *************/
-const callbacks = name => dig(['callbacks', name], marmotGlobals)
-
-const execCallback = options => callback => callback(options)
+export const router = callOrCreate(global.marmotGlobals)('router')
 
 // Register a callback on an eventname (begin|cleanup)
-export const on = name => callback => callbacks(name).push(callback)
+export const on = Callbacks.on
 
 // Run callbacks for a given eventname
-export const run = (name, options) => callbacks(name).forEach(execCallback(options))
+export const run = Callbacks.run
 
 // Call this in afterEach for all scenarios
-export const cleanup = () => [run('cleanup'), DOMCleanup()]
+export const cleanup = () => [Callbacks.run('cleanup'), Scenario.cleanup()]
 
-export const renderer = DomRenderer
+export const renderer = Scenario.renderer
+
+export const scenario = Scenario.scenario
 
 const Marmot = {
   cleanup,

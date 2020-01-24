@@ -1,7 +1,17 @@
-import {actions} from "../page"
 import {K} from "../../utility"
 import * as List from "./list"
 import terminators from "./terminators"
+
+const actions = [
+  'click',
+  'debug',
+  'enter',
+  'exec',
+  'fillIn',
+  'notSee',
+  'see',
+  'sleep',
+  'visit']
 
 // Return a function that takes name, args, and page ('visit', '/', page)
 const step = name => (...args) => page => page[name](...args)

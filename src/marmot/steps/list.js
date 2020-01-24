@@ -5,8 +5,14 @@ export const capture = list => func => (...args) => list.push(func(...args))
 export const run = (list, done) => state => (
   list
     .reduce((chain, func) => (
-      chain.then(() => func(state))),
+      chain.then(() => {
+        console.log("Running", func, state)
+        return func(state)
+      })),
       Promise.resolve([]))
-    .finally(done)
+    .finally(() => {
+      console.log("Done Running")
+      done()
+    })
 )
 

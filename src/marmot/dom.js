@@ -1,6 +1,13 @@
-import { act, render as RTLRender, waitForElement, fireEvent, cleanup as RTLCleanup } from '@testing-library/react'
+import {
+  act,
+  render as RTLRender,
+  waitForElement,
+  fireEvent,
+  cleanup as RTLCleanup
+} from '@testing-library/react'
+
 import "regenerator-runtime/runtime"
-import Marmot from "../index"
+
 import userEvent from "@testing-library/user-event"
 
 // What kind of dom query are we performing?
@@ -58,7 +65,7 @@ export const type = content => async element => (await userEvent.type(element, c
 
 // Visit
 // todo: make this plugin into client router
-export const visit = url => (Marmot.router().replace || window.location.assign)(url)
+export const visit = url => (global.marmotGlobals.router().replace || global.window.location.assign)(url)
 
 // Clean dom
 export const cleanup = RTLCleanup

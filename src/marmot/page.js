@@ -1,5 +1,14 @@
-import {click, enter, find, type, visit} from "./dom"
-import {promise} from "../utility"
+import {
+  click,
+  cleanup as DomCleanup,
+  enter,
+  find,
+  render as DomRender,
+  renderer as DomRenderer,
+  type,
+  visit } from "./dom"
+
+import { promise } from "../utility"
 
 // this 'page' object holds onto the testing-library dom/container/functions for interacting with jsdom
 const normalizeFillInFinder = finder => (
@@ -45,5 +54,11 @@ export const page = domFunctions => ({
 
 // a little heavy to get keys
 export const actions = Object.keys(page({}))
+
+export const render = DomRender
+
+export const renderer = DomRenderer
+
+export const cleanup = DomCleanup
 
 export default page 
