@@ -33,7 +33,7 @@ jobs:
       - run: git config --local user.email "action@github.com"
       - run: git config --local user.name "GitHub Action"
       - run: npm ci
-      - run: npm run pack
+      - run: npm run build
       - run: git commit -am "Build for $GITHUB_SHA" || echo "no changes to bundle.js"
       - run: npm version patch
       - run: git push "https://GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"

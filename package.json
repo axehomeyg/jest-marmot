@@ -29,13 +29,15 @@
     "jest": "^25.1.0",
     "jsdom": "^16.0.1",
     "jsdom-global": "^3.0.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "regenerator-runtime": "^0.13.3",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3"
   },
   "scripts": {
     "develop": "webpack --mode development --watch",
-    "pack": "webpack --mode development",
+    "pack": "webpack --mode production",
     "build": "webpack --mode production",
     "test": "jest test",
     "test:watch": "jest --watch"
