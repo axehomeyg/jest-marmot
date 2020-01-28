@@ -7,9 +7,11 @@ export const run = (list, done) => state => (
     .reduce((chain, func) => (
       chain.then(() => {
         return func(state)
-      })),
+      })
+    ),
       Promise.resolve([]))
-    .finally(() => {
+    .catch(err => done.fail("Marmot Error", err))
+    .finally(res => {
       done()
     })
 )

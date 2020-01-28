@@ -16,9 +16,12 @@ const normalizeFillInFinder = finder => (
     {labelText: finder} :
     finder)
 
+
 export const page = domFunctions => ({
     // Click on an element
-    click: (finder) => find(finder, domFunctions).then(click),
+    click: (finder) => find(finder, domFunctions)
+      .then(click),
+      // .catch(error => expect(error))),
 
     // Debug the DOM
     debug: () => domFunctions.debug(),
@@ -35,7 +38,7 @@ export const page = domFunctions => ({
     // Using the wait helpers for notSee takes forever, let's use pure JS on the dom body
     notSee: (content) => expect(
       domFunctions
-        .container
+        .container && domFunctions.container
         .innerHTML)
       .toEqual(
         expect

@@ -5,6 +5,7 @@ import {
   fireEvent,
   cleanup as RTLCleanup
 } from '@testing-library/react'
+import { renderHook } from '@testing-library/react-hooks'
 
 import "regenerator-runtime/runtime"
 
@@ -83,4 +84,6 @@ const withWrappers = (child, options, wrappers) => (
 export const renderer = wrapper => renderWrappers.push(wrapper)
 
 // Apply wrappers
+// export const render = (comp, options) => RTLRender(withWrappers(comp, options, renderWrappers))
 export const render = (comp, options) => RTLRender(withWrappers(comp, options, renderWrappers))
+// export const render = (comp, options) => renderHook(withWrappers(comp, options, renderWrappers))

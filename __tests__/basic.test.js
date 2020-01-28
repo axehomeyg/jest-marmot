@@ -44,4 +44,12 @@ describe("Click Happy", () => {
     .click({testId: "clickable"})
     .see(shown)
     .run()
+
+  // // Uncomment to test step failure handling
+  // Marmot.scenario("Fails predictably")
+  //   .notSee(shown)
+  //   .click({testId: "aclickable"})
+  //   .see(shown)
+  //   .run()
+
 })
