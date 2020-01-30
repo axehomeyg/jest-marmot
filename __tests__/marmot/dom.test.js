@@ -1,4 +1,16 @@
 import * as Dom from "../../src/marmot/dom"
+import * as RTL from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
+
+jest.mock("@testing-library/react", () => ({
+  act: cb => cb(),
+  render: jest.fn(),
+  fireEvent: {
+    keyDown: jest.fn()
+  },
+  waitForElement: jest.fn(f => Promise.resolve(f()))}))
+
+jest.mock("@testing-library/user-event", () => ({}))
 
 it(".queryType - extracts query prefix from options", () => {
   expect(Dom.queryType()).toEqual("get")
@@ -19,6 +31,65 @@ it(".queryParameters - maps querytype to dom query suffix", () => {
     .forEach(pair => {
       expect(Dom.queryParameters(pair[0])).toEqual(pair[1])
     })
+})
+
+it(".asyncCall - abstract away syntax for asynchronous event handlers", async done => {
+  const finisher = d => Promise.resolve(d())
+
+  Dom.asyncCall(finisher)(done)
+})
+
+it(".finderFunction - query builder for jsdom", () => {
+  const dom = { getByText: jest.fn() }
+
+  Dom.finderFunction(dom)(["ByText", "a", "b"], "get")
+
+  expect(dom.getByText).toHaveBeenCalledWith("a", "b")
+})
+
+
+it(".find - bring together all query params into a jsdom query ", async done => {
+  Dom
+    .find("stuff", { getByText: jest.fn() })
+    .then(done)
+})
+
+describe("Events", () => {
+
+  const el = "element"
+
+  it(".click - ", () => {
+    userEvent.click = jest.fn()
+
+    Dom.click(el)
+
+    expect(userEvent.click).toHaveBeenCalledWith(el)
+  })
+
+  it(".enter - ", () => {
+    Dom.enter(el)
+
+    expect(RTL.fireEvent.keyDown)
+      .toHaveBeenCalledWith(
+        el,
+        { key: 'Enter', keyCode: 13, which: 13 })
+  })
+
+  it(".type - ", () => {
+    const content = "stuff"
+
+    userEvent.type = jest.fn()
+
+    Dom.type(content)(el)
+
+    expect(userEvent.type).toHaveBeenCalledWith(el, content)
+  })
+})
+
+it(".render - wraps testing-library's renderer with our wrappers", () => {
+  Dom.render("")
+
+  expect(RTL.render).toHaveBeenCalled()
 })
 
 describe("errors", () => {
@@ -106,6 +177,4 @@ describe("#visit", () => {
     expect(assignFunc).toHaveBeenCalledWith(url)
 
   })
-
-
 })
