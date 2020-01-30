@@ -15,8 +15,10 @@ export const run = (name, options) => callbacks(name).forEach(execCallback(optio
 
 // Call this in afterEach for all scenarios
 
-export const setGlobals = () => (
-  global.marmotGlobals = ({
+export const setGlobals = globals => (
+  global.marmotGlobals = globals || ({
+    root: undefined,
+    router: undefined,
     callbacks: {
       begin: [],
       cleanup: []

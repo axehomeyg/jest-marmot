@@ -11,79 +11,62 @@ import "regenerator-runtime/runtime"
 
 import userEvent from "@testing-library/user-event"
 
-// What kind of dom query are we performing?
-export const queryPlan = finder => {
-  if(typeof finder == "string") {
-    return "inlineText"
-  }
-  else if(finder.placeholder) {
-    return "placeholder"
-  }
-  else if(finder.testId) {
-    return "testId"
-  }
-  else if(finder.text) {
-    return "text"
-  }
-  else if(finder.labelText) {
-    return "label"
-  }
-  else {
-    return undefined
-  }
-}
+import { dig } from "../utility"
+
+import { withWrappers } from "./wrappers"
+
+export { cleanup } from "@testing-library/react"
+export { renderer } from "./wrappers" 
 
 // Do we need a specialized find? (get, getAll, queryAll)
-export const queryType = options => ((options && options.queryType) || "get")
+export const queryType = options => (dig(['queryType'], options) || "get")
 
 // Map Search parameters into react-testing-library function calls
-export const queryParameters = finder => ({
-  "inlineText":   () => ["ByText", finder],
-  "placeholder":  () => ["ByPlaceHolderText", finder.placeholder],
-  "testId":       () => ["ByTestId", finder.testId],
-  "text":         () => ["ByText", finder.text, finder.selector ? {selector: finder.selector} : {}],
-  "label":        () => ["ByLabelText", finder.labelText ]})[queryPlan(finder)]()
+
+export const queryParameters = finder => (
+  ((typeof finder == "string") &&
+    ["ByText", finder]) ||
+  (finder.placeholder &&
+    ["ByPlaceHolderText", finder.placeholder]) ||
+  (finder.testId &&
+    ["ByTestId", finder.testId]) ||
+  (finder.text &&
+    ["ByText", finder.text, finder.selector ? { selector: finder.selector } : {}]) ||
+  (finder.labelText && 
+    ["ByLabelText", finder.labelText]))
 
 // Execute the query using jsdom
-const finderFunction = domFunctions => (queryParams, prefix) => domFunctions[prefix + queryParams[0]](...queryParams.slice(1))
+const finderFunction = domFunctions => ([query, ...args], prefix) => domFunctions[prefix + query](...args)
+
+export const findError = err => {
+  process.env.DEBUG &&
+    console.warn("WaitForElement threw error", err)
+  throw err
+}
 
 // Wrapper with async wait support for finders
 export const find = (finder, domFunctions, options) => (
-  waitForElement(() => finderFunction(domFunctions)(queryParameters(finder,  options || {}), queryType(options)))
-    .catch(err => {
-      console.log("WaitForElement threw error", err, "For Finder", finder, "With Body", domFunctions.container, domFunctions.container.innerHTML) // eslint-disable-line
-      throw err
-    }))
+  waitForElement(() => (
+    finderFunction
+      (domFunctions)
+      ( queryParameters(finder,  options || {}),
+        queryType(options))))
+    .catch(findError))
+
+const asyncCall = call => async el => (await call(el))
 
 // Click support
 export const click = element => { act(() => userEvent.click(element)) ; return }
 
 // Enter support
-export const enter = async element => (await fireEvent.keyDown(element, {  key: 'Enter', keyCode: 13, which: 13}))
+export const enter = asyncCall(el => fireEvent.keyDown(el, {  key: 'Enter', keyCode: 13, which: 13}))
 
 // Type support
-export const type = content => async element => (await userEvent.type(element, content))
+export const type = content => asyncCall(el => userEvent.type(el, content))
 
 // Visit
 // todo: make this plugin into client router
 export const visit = url => (global.marmotGlobals.router().replace || global.window.location.assign)(url)
 
-// Clean dom
-export const cleanup = RTLCleanup
-
-// Render Wrapper support (for client integrations such as react-router or redux)
-const renderWrappers = []
-
-const withWrapper = (child, options, wrapper) => wrapper(child, options)
-
-const withWrappers = (child, options, wrappers) => (
-  renderWrappers.reduce(
-    (wrappedChild, wrapper) => (
-      withWrapper(wrappedChild, options, wrapper)), child))
-
-export const renderer = wrapper => renderWrappers.push(wrapper)
-
 // Apply wrappers
-// export const render = (comp, options) => RTLRender(withWrappers(comp, options, renderWrappers))
-export const render = (comp, options) => RTLRender(withWrappers(comp, options, renderWrappers))
-// export const render = (comp, options) => renderHook(withWrappers(comp, options, renderWrappers))
+export const render = (comp, options) => RTLRender(withWrappers(comp, options))
