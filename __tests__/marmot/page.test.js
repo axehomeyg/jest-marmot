@@ -3,7 +3,6 @@ import Page, {actions} from "../../src/marmot/page"
 jest.mock("../../src/marmot/dom")
 
 describe("Fill In", () => {
-
   it("pins a finder specifically to labelText for a textfield", () => {
     const mockPage = 'page'
     const mockResultFunc = jest.fn(v => v)
@@ -21,20 +20,6 @@ describe("Fill In", () => {
     expect(mockFindFunc2).toHaveBeenCalledWith({labelText: "key"}, mockPage)
     expect(mockResultFunc).toHaveBeenCalledWith("value")
   })
-})
-
-it("Lists all actions in page object, for external use", () => {
-  expect(actions).toEqual([
-    'click',
-    'debug',
-    'enter',
-    'exec',
-    'fillIn',
-    'notSee',
-    'see',
-    'sleep',
-    'visit'
-  ])
 })
 
 it("Supports auxiliary debug functions", () => {
@@ -67,4 +52,5 @@ it("Supports arbitrary code execution as a step", () => {
   expect(func).toHaveBeenCalled()
 })
 
-it("Supports sleep to debug", () => Page({}).sleep(0))
+
+it("Supports sleep to debug", done => Page({}).sleep(0).then(done))

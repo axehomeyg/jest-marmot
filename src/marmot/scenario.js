@@ -1,8 +1,10 @@
 import { stepsCollector } from "./steps"
-import page, {
-  render as PageRender,
-  renderer as PageRenderer,
-  cleanup as PageCleanup } from "./page"
+import page, { render } from "./page"
+
+export {
+  render,
+  renderer,
+  cleanup } from "./page"
 
 // Run a chained operation scenario
 export const scenario = (name, options = {}) => stepsCollector({
@@ -16,8 +18,3 @@ export const scenario = (name, options = {}) => stepsCollector({
   // Options available to all running steps
   options})
 
-export const cleanup = PageCleanup
-
-export const render = PageRender
-
-export const renderer = PageRenderer
