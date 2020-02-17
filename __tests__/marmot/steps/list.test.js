@@ -57,7 +57,7 @@ describe("#run", () => {
         (state)
       .catch(err => console.log("Test Failure", err))
       .then(() => {
-        expect(failo).toHaveBeenCalledWith("Marmot Error", "failure 1")
+        expect(failo).toHaveBeenCalledWith("failure 1")
         expect(finito).toHaveBeenCalled()
         done()
       })

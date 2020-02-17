@@ -10,7 +10,7 @@ export const run = (list, done) => state => (
       })
     ),
       Promise.resolve([]))
-    .catch(err => done.fail("Marmot Error", err))
+    .catch(err => done.fail(err))
     .finally(res => {
       done()
     })
