@@ -8,7 +8,7 @@ const terminators = collector => ({
 
   // run:  () => it(collector.name, async done => K(K(collector)(collector.done = done))(Callbacks.run('begin', collector.options))),
   run:  () => it(collector.name, done => {
-    return Promise.resolve(K(K(collector)(collector.done = done))(Callbacks.run('begin', collector.options)))
+    Promise.resolve(K(K(collector)(collector.done = done))(Callbacks.run('begin', collector.options)))
   }),
 
   // Run all of those steps

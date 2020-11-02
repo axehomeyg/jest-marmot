@@ -8,9 +8,11 @@ export const run = (list, done) => state => (
       chain.then(() => {
         return func(state)
       })
-    ),
-      Promise.resolve([]))
-    .catch(err => done.fail(err))
+    ), Promise.resolve([]))
+    .catch(err => (
+      (done && done.fail) ?
+        done.fail(err) :
+        console.warn("Jest::Marmot run error", err)))
     .finally(res => {
       done()
     })
