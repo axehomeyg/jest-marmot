@@ -6,7 +6,10 @@ import * as Callbacks from "../callbacks"
 const terminators = collector => ({
   then: res => collector.toPromise().then(res),
 
-  run:  () => it(collector.name, async done => K(K(collector)(collector.done = done))(Callbacks.run('begin', collector.options))),
+  // run:  () => it(collector.name, async done => K(K(collector)(collector.done = done))(Callbacks.run('begin', collector.options))),
+  run:  () => it(collector.name, done => {
+    return Promise.resolve(K(K(collector)(collector.done = done))(Callbacks.run('begin', collector.options)))
+  }),
 
   // Run all of those steps
   toPromise: () => List.run(collector.list, collector.done)(collector.page())

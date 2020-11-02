@@ -50,7 +50,7 @@ describe("Click Happy", () => {
     .see("doh!")
     .run()
 
-  Marmot.scenario("Text handling")
+  Marmot.scenario("Text handling 2")
     .steps([
       ["fillIn", "Tayuxt", "dang!"],
       ["click", {testId: "clickable"}],
