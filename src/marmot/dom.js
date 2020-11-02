@@ -34,8 +34,7 @@ export const queryParameters = finder => (
 export const finderFunction = domFunctions => ([query, ...args], prefix) => domFunctions[prefix + query](...args)
 
 export const findError = err => {
-  process.env.DEBUG &&
-    console.warn("WaitForElement threw error", err)
+  process.env.DEBUG && console.warn("WaitForElement threw error", err)
   throw err
 }
 
