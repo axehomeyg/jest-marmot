@@ -12,7 +12,7 @@ export const run = (list, done) => state => (
     .catch(err => (
       (done && done.fail) ?
         done.fail(err) :
-        console.warn("Jest::Marmot run error", err)))
+        done("Jest::Marmot run error", err)))
     .finally(res => {
       done()
     })
