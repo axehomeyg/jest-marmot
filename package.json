@@ -10,9 +10,9 @@
   "author": "Michael Cerna <cerna5150@yahoo.com>",
   "license": "MIT",
   "dependencies": {
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/react-hooks": "^3.2.1",
-    "@testing-library/user-event": "^12.1.10"
+    "@testing-library/react": "^11.1.1",
+    "@testing-library/react-hooks": "^3.4.2",
+    "@testing-library/user-event": "^12.2.0"
   },
   "peerDependencies": {
     "react": "^17.0.1",

@@ -8,6 +8,7 @@ jest.mock("@testing-library/react", () => ({
   fireEvent: {
     keyDown: jest.fn()
   },
+  waitFor: jest.fn(f => Promise.resolve(f())),
   waitForElement: jest.fn(f => Promise.resolve(f()))}))
 
 jest.mock("@testing-library/user-event", () => ({}))
